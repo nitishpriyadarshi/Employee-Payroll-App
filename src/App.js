@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { Component } from 'react'
+import PayrollForm from './components/PayrollForm'
 
-function App() {
-  return (
-    <div>
-      <h1>Hello World</h1>
-    </div>
-  )
+export default class App extends Component {
+  render() {
+    return (
+      <div>
+        
+        <PayrollForm />
+
+      </div>
+    )
+  }
 }
-
-export default App
-
-
