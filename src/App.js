@@ -1,14 +1,22 @@
-import React, { Component } from 'react'
-import PayrollForm from './components/PayrollForm'
+import React from "react";
+import PayrollForm from "./components/PayrollForm";
+import { Link, Route, Routes } from "react-router-dom";
+import Home from "./components/Home";
 
-export default class App extends Component {
-  render() {
-    return (
+class App extends React.Component{
+  render(){
+    return(
       <div>
-        
-        <PayrollForm />
-
+        <Routes>
+        <Route path="/form" element={<PayrollForm/>}/>
+          <Route path="/homepage" element={<Home/>}/>
+        </Routes>
+        <h2>
+          <Link to="/homepage" >Home </Link>  |
+          <Link to="/form">PayrollForm </Link>
+        </h2>
       </div>
-    )
+    );
   }
 }
+export default App;
