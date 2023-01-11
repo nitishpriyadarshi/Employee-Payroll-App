@@ -1,18 +1,42 @@
 import React from 'react' //rfce
 import logo from '../assets/logo.png'
 import Add from '../assets/add-24px.svg'
-import './PayrollForm.js'
 import './Home.css'
+import EmployeeService from '../service/EmployeeService'
+import { Link } from 'react-router-dom'
+import Display from './Display'
 
 
 
 export class Home extends React.Component {
 
-    onClick = ($event) => {
-        console.log('save button is clicked!', $event);
-        window.open("http://localhost:3000/PayrollForm", '_blank');
+    constructor(props) {
+        super(props);
+        this.state = {
+            AllEmployeeArray: [],
+        };
     }
+    componentDidMount() {
+        console.log("Life cycle method");
+        this.getAllEmployee();
+    }
+
+    getAllEmployee = () => {
+        EmployeeService.getAllEmployees()
+            .then((response) => {
+                this.setState({
+                    AllEmployeeArray: response.data.data,
+                });
+                console.log(response);
+            })
+            .catch((err) => {
+                alert("Something went wrong, while getting all the records", err);
+            });
+    };
+
+
     render() {
+        console.log("Render Method Is Excuted First");
         return (
             <div>
                 <div>
@@ -31,23 +55,18 @@ export class Home extends React.Component {
                             <div className="emp-detail-text">
                                 Employee Details
                             </div>
-                            <a href="./HomePage.js" className="add-button" onClick={this.onClick}>
-                                <img src={Add} alt="" />
-                                Add User
-                            </a>
+                            <Link className='add-button' to='/form'>
+                                <img src={Add} alt="Add user" />
+                                <div>Add user</div>
+                            </Link>
                         </div>
-                        <table id="display" className="table">
-                            <tr>
-                                <th></th>
-                                <th>Name</th>
-                                <th>Gender</th>
-                                <th>Department</th>
-                                <th>Salary</th>
-                                <th>Start Date</th>
-                                <th>Actions</th>
-                            </tr>
 
-                        </table>
+                        <div class="table-main">
+                            <Display
+                                employeeArray={this.state.AllEmployeeArray}
+                                getAllEmployee={this.getAllEmployee}
+                            />
+                        </div>
                     </div>
 
                 </div>

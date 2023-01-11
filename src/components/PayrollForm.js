@@ -5,7 +5,7 @@ import Pic2 from '../assets/avatar5.png'
 import Pic3 from '../assets/avatar6.png'
 import Pic4 from '../assets/img_avatar.png'
 import './PayrollForm.css'
-
+import EmployeeService from '../service/EmployeeService'
 const PayrollForm = () => {
     let initialValue = {
         employeeId: '',
@@ -54,7 +54,7 @@ const PayrollForm = () => {
 
         let object = {
             name: formValue.name,
-            departments: formValue.department,
+            department: formValue.department,
             gender: formValue.gender,
             salary: formValue.salary,
             startDate: `${formValue.day} ${formValue.month} ${formValue.year}`,
@@ -62,6 +62,13 @@ const PayrollForm = () => {
             profilePic: formValue.profilePic,
         };
         console.log(object);
+        EmployeeService.addEmployee(object).then((response)=>{
+            alert("Employee Data Added Successfully");
+            console.log(response);
+        })
+        .catch((error)=>{
+            alert("Something Went Wrong",error);
+        });
     };
 
     const reset = () => {
